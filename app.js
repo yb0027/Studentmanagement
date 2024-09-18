@@ -22,3 +22,14 @@ angular.module('studentApp', [])
       self.studentList.splice(index, 1);
     };
   });
+
+  function validateForm() {
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    if (firstName === "" || lastName === "") {
+        alert("First Name and Last Name are required!");
+        return false;
+    }
+    return true;
+}
+document.getElementById("addStudentForm").onsubmit = validateForm;

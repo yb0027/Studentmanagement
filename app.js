@@ -22,3 +22,21 @@ angular.module('studentApp', [])
       self.studentList.splice(index, 1);
     };
   });
+
+  function validateForm() {
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    if (firstName === "" || lastName === "") {
+        alert("First Name and Last Name are required!");
+        return false;
+    }
+    return true;
+}
+document.getElementById("addStudentForm").onsubmit = validateForm;
+
+function confirmDelete() {
+  return confirm("Are you sure you want to delete this record?");
+}
+document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.onclick = confirmDelete;
+});

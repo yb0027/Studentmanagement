@@ -33,3 +33,10 @@ angular.module('studentApp', [])
     return true;
 }
 document.getElementById("addStudentForm").onsubmit = validateForm;
+
+function confirmDelete() {
+  return confirm("Are you sure you want to delete this record?");
+}
+document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.onclick = confirmDelete;
+});

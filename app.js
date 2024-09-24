@@ -1,6 +1,6 @@
 angular.module('studentApp', [])
 
-  .controller('StudentController', function () {
+.controller('StudentController', function () {
     var self = this;
 
     // initialize empty student object and student list array
@@ -9,27 +9,24 @@ angular.module('studentApp', [])
 
     // function to add a new student to the list
     self.addStudent = function (studentForm) {
-      // validate form inputs
-      if (studentForm.$valid) { // validation occurs here
-        self.studentList.push(self.newStudent);
-        self.newStudent = {};
-        studentForm.$setPristine();
-      }
+        // Check if First Name and Last Name are empty to trigger an alert message
+        if (!self.newStudent.firstName || !self.newStudent.lastName) {
+            alert("First Name and Last Name are required!");
+            return; // Stop further execution if validation fails
+        }
+
+        if (studentForm.$valid) { // Angular form validation
+            self.studentList.push(self.newStudent);
+            self.newStudent = {}; // Reset the form after successful addition
+            studentForm.$setPristine();
+            studentForm.$setUntouched();
+        }
     };
 
-    // function to delete a student from the list
-    self.deleteStudent = function (index) {
-      self.studentList.splice(index, 1);
+    // function to confirm and delete a student from the list
+    self.confirmDelete = function (index) {
+        if (confirm("Are you sure you want to delete this record?")) {
+            self.studentList.splice(index, 1);
+        }
     };
-  });
-
-  function validateForm() {
-    let firstName = document.getElementById("firstName").value;
-    let lastName = document.getElementById("lastName").value;
-    if (firstName === "" || lastName === "") {
-        alert("First Name and Last Name are required!");
-        return false;
-    }
-    return true;
-}
-document.getElementById("addStudentForm").onsubmit = validateForm;
+});

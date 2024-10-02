@@ -12,25 +12,37 @@
 
 <body ng-controller="StudentController as studentCtrl">
     <h1>Student Management System</h1>
-    <form name="studentForm" ng-submit="studentCtrl.addStudent(studentForm)">
+
+    <!-- Form to add a new student -->
+    <form id="addStudentForm" name="studentForm" ng-submit="studentCtrl.addStudent(studentForm)" novalidate>
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" ng-model="studentCtrl.newStudent.firstName" ng-required="true">
+        <span ng-show="studentForm.firstName.$touched && studentForm.firstName.$error.required" style="color:red;">First Name is required!</span>
         
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" name="lastName" ng-model="studentCtrl.newStudent.lastName" ng-required="true">
-        
+        <span ng-show="studentForm.lastName.$touched && studentForm.lastName.$error.required" style="color:red;">Last Name is required!</span>
+
         <label for="address">Address:</label>
         <input type="text" id="address" name="address" ng-model="studentCtrl.newStudent.address" ng-required="true">
-        
+        <span ng-show="studentForm.address.$touched && studentForm.address.$error.required" style="color:red;">Address is required!</span>
+
         <label for="mobileNo">Mobile No:</label>
         <input type="tel" id="mobileNo" name="mobileNo" ng-model="studentCtrl.newStudent.mobileNo" ng-pattern="/^\d{10}$/" ng-required="true">
-        
+        <span ng-show="studentForm.mobileNo.$touched && studentForm.mobileNo.$error.required" style="color:red;">Mobile No is required!</span>
+        <span ng-show="studentForm.mobileNo.$touched && studentForm.mobileNo.$error.pattern" style="color:red;">Invalid mobile number!</span>
+
         <label for="class">Class:</label>
         <input type="text" id="class" name="class" ng-model="studentCtrl.newStudent.class" ng-required="true">
-        
-        <button type="submit">Add Student</button>
+        <span ng-show="studentForm.class.$touched && studentForm.class.$error.required" style="color:red;">Class is required!</span>
+
+        <button type="submit" ng-disabled="studentForm.$invalid">Add Student</button>
     </form>
-    <input type="text" ng-model="searchQuery" placeholder="Search by first name or last name">
+
+    <!-- Search box -->
+    <input type="text" ng-model="searchQuery" placeholder="Search by first name or last name" />
+
+    <!-- Table to display student data -->
     <table>
         <thead>
             <tr>
@@ -49,10 +61,11 @@
                 <td>{{student.address}}</td>
                 <td>{{student.mobileNo}}</td>
                 <td>{{student.class}}</td>
-                <td><button ng-click="studentCtrl.deleteStudent($index)">Delete</button></td>
+                <td><button class="delete-btn" ng-click="studentCtrl.confirmDelete($index)">Delete</button></td>
             </tr>
         </tbody>
     </table>
+
 </body>
 
 </html>
